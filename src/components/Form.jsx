@@ -1,25 +1,20 @@
 import { useState } from "react";
 
-export default function Form({ openDialog }) {
+
+export default function Form({ openDialog, setRoomId }) {
   const [inputCode, setInput] = useState("");
   const [errorLabel, setErrorLabel] = useState("");
-  const [spaceCode, setSpaceCode] = useState("");
 
   const validateSpaceCode = () => {
     const regex = /^[a-z0-9]{6}$/;
     if(regex.test(inputCode)) {
-      setSpaceCode(inputCode);
+      setRoomId(inputCode);
       setErrorLabel('');
       return true;
     } else {
       setErrorLabel('Enter a valid space code');
       return false;
     }
-  }
-
-  const createSpaceCode = () => {
-    const code = Math.random().toString(26).substring(2, 8);
-    console.log(code);
   }
 
   return (
@@ -52,7 +47,7 @@ export default function Form({ openDialog }) {
       </button>
 
       <p className="text-lg md:text-xl opacity-60">OR</p>
-      <button onClick={ e => { e.preventDefault(); openDialog(); createSpaceCode(); }} className="h-8 md:h-10 w-[17.6rem] md:w-[22rem] rounded-lg border-primary border-[1px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:bg-opacity-20 active:bg-opacity-30 hover:bg-primary hover:bg-opacity-10 text-sm md:text-base shadow-xl shadow-primary/5">
+      <button onClick={ e => { e.preventDefault(); openDialog(); }} className="h-8 md:h-10 w-[17.6rem] md:w-[22rem] rounded-lg border-primary border-[1px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:bg-opacity-20 active:bg-opacity-30 hover:bg-primary hover:bg-opacity-10 text-sm md:text-base shadow-xl shadow-primary/5">
         <span className="text-primary opacity-80 ">Create Space</span>
       </button>
 

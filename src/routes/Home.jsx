@@ -1,39 +1,56 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Codepic from "../components/Codepic";
 import Form from "../components/Form";
-import { useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { setCode } from "../features/space/spaceSlice";
+import { setUser } from "../features/user/userSlice";
 
 export default function Home() {
   const navigate = useNavigate();
   const [ showModal, setShowModal ] = useState(false);
-  const [username, setUsername] = useState("");
-
-  // const spaceState = useSelector(state => state.space);
+  const [ username, setUsername ] = useState("");
+  const [ roomId, setRoomId ] = useState("");
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    function generateRoomId() {
+      const id = Math.random().toString(36).substring(2, 8);
+      if(roomId.length === 0) setRoomId(id); 
+    }
+    generateRoomId();
+  }, []);
 
   const openDialog = () => {
     setShowModal( true );
   }
 
   const closeDialog = () => {
-    console.log(username);
     setShowModal( false );
   }
 
-  const validate = () => {
-    const regex = /^[a-zA-Z0-9]+$/;
-    if(regex.test(username)) {
+  const validate = (e) => {
+    e.preventDefault();
+    const regexUser = /^[a-zA-Z0-9]+$/;
+    const regexRoom = /^[a-z0-9]{6}$/;
+    if(regexUser.test(username) && regexRoom.test(roomId)) {
       setShowModal( false );
-      navigate('/space');
+      dispatch(setUser({
+        username,
+        socketId: null,
+      }));
+      
+      navigate(`/space/${roomId}`);
+    } else {
+
     }
-    
   }
 
   return (
     <div className="h-[80%] flex justify-evenly sm:flex-row flex-col items-center space-y-4">
       <Codepic/>
-      <Form openDialog={ openDialog }/>
+      <Form openDialog={ openDialog } setRoomId={ setRoomId } />
 
       {
         showModal && (
@@ -44,9 +61,9 @@ export default function Home() {
                 <IoCloseCircle fontSize='1.8rem' />
               </button>
             </div>
-            <form method="dialog">
+            <form>
               <label className="text-xs">alpha-numeric only</label>
-              <input placeholder='john doe' onChange={ e => setUsername(e.target.value) } className="w-[100%] py-2 px-4 rounded-lg border-primary border-2 bg-transparent text-sm placeholder:text-slate-600 focus:outline-none focus:border-slate-500" /> <br />
+              <input autoFocus={true} placeholder='john doe' onChange={ e => setUsername(e.target.value) } className="w-[100%] py-2 px-4 rounded-lg border-primary border-2 bg-transparent text-sm placeholder:text-slate-600 focus:outline-none focus:border-slate-500" /> <br />
               <button onClick={ validate } className="float-right mt-2 py-2 px-6 rounded-lg border-transparent bg-primary font-bold text-black/80 shadow-xl shadow-primary/20">Go to Space</button>
             </form>
           </dialog>

@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import App from './App.jsx';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import Home from "./routes/Home.tsx";
-import ErrorPage from "./routes/ErrorPage.tsx";
-import Space from "./routes/Space.tsx";
-// import { Provider } from 'react-redux';
-// import { store } from './store.ts';
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import { createBrowserRouter, createHashRouter, RouterProvider } from "react-router-dom";
-// import NamePopup from "./components/NamePopup.tsx";
+import Home from "./routes/Home.jsx";
+import Space from "./routes/Space.jsx";
+import CodePaste from './routes/CodePaste.jsx';
+import ErrorPage from "./routes/ErrorPage.jsx";
+import { store } from './store.js';
+import { Provider } from 'react-redux';
 import "./index.css";
 
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import { createBrowserRouter, createHashRouter, RouterProvider } from "react-router-dom";
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -40,20 +40,18 @@ import "./index.css";
 //   </React.StrictMode>
 // );
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    
-      {/* <RouterProvider router={router} /> */}
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <Provider store={store}>
       <HashRouter>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="space" element={<Space />} />
-          {/* <Route path="name" element={<NamePopup />} /> */}
+          <Route path="space/:roomId" element={<Space />} />
+          <Route path="code/:pasteKey" element={<CodePaste />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </HashRouter>  
-  </React.StrictMode>
+  </Provider>
 );
 

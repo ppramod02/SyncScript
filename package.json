@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "server:dev": "nodemon server.js",
     "server:prod": "node server.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -24,13 +24,14 @@
     "@uiw/codemirror-theme-nord": "^4.21.24",
     "@uiw/codemirror-themes": "^4.21.24",
     "@uiw/react-codemirror": "^4.21.24",
+    "dotenv": "^16.4.5",
     "express": "^4.19.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
-    "socket.io": "^4.7.5",
+    "react-toastify": "^10.0.5",
     "socket.io-client": "^4.7.5"
   },
   "devDependencies": {

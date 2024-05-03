@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 
-export default function Toolbar({ setEditorConfig }) {
+export default function Toolbar({ setEditorConfig, copyToClipboard, executeCode, saveCodeAsPaste, roomId }) {
 
   // function classNames(...classes) {
   //   return classes.filter(Boolean).join(' ');
@@ -13,8 +13,9 @@ export default function Toolbar({ setEditorConfig }) {
       <Dropdown options={ ['javascript', 'cpp', 'python', 'java'] } setting={ 'lang' } setEditorConfig={ setEditorConfig } />      
       <Dropdown options={ [ 'nord', 'dracula', 'github', 'onedark', 'noctis-lila'] } setting={ 'theme' } setEditorConfig={ setEditorConfig } /> 
 
-      <Button title="Share snippet" />
-      <Button title="Run Code" />
+      <Button onClick={ saveCodeAsPaste } title="Share snippet" />
+      <Button onClick={ executeCode } title="Run Code" />
+      <Button title="Copy Room" onClick={ () => copyToClipboard(roomId, 'room-id') } />
     </fieldset>
   );
 }
