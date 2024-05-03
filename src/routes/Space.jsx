@@ -90,7 +90,6 @@ export default function Space() {
   }
 
   useEffect(() => {
-    // console.log(pasteClient);
     async function init() {
       try {
         console.log('Initializing socket...');
